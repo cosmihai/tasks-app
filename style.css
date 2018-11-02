@@ -1,0 +1,101 @@
+/* ---- reset ---- */
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- typography ---- */
+
+body {
+  color: #111;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 147%;
+}
+
+h1 {
+  text-align: center;
+  font-weight: 100;
+  color: #333
+}
+
+h2 {
+  text-align: center;
+  font-weight: 400;
+}
+
+
+
+/* ---- layout ---- */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.wrapper {
+  border: .5px solid rgba(180, 180, 180, .5);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ---- components ---- */
+
+.input {
+  width: 100%;
+  padding: .5rem;
+  border: none;
+  border-bottom: 1px solid rgba(180, 180, 180, .5);
+  margin-bottom: 1rem;
+}
+
+.btn {
+  border: none;
+  background-color: transparent;
+  padding: .5rem;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px lightgray;
+}
+
+.list-item {
+  list-style: none;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-top: 1px solid rgba(180, 180, 180, .5);
+  border-left: 1px solid rgba(180, 180, 180, .5);
+  border-top-left-radius: .5rem;
+  box-shadow: 3px 3px 3px rgba(180, 180, 180, .5);
+}
+
+.list-item:last-child {
+  margin-bottom: 0
+}
+
+
+.del-btn {
+  float: right;
+  color: red;
+  transform: scale(1.5, 1);
+  cursor: pointer;
+}
+
+/* ---- modifier ---- */
+
+.btn--primary {
+  background-color: #2BD1C0;
+  color: #fff;
+}
+
+.btn--dark {
+  background-color: #333;
+  color: #fff;
+}
