@@ -5,10 +5,9 @@ const addTaskBtn  = document.querySelector('#add-task');
 const clearBtn    = document.querySelector('#clear-btn');
 const filter      = document.querySelector('#filter');
 const taskInput   = document.querySelector('#new-task-input');
-let tasksArray    = [];
 
 loadEventListeners();
-outputAllTasks(tasksArray);
+checkStorage();
 
 function loadEventListeners() {
   form.addEventListener('submit', addTask);
@@ -20,34 +19,53 @@ function addTask(e){
   if(taskInput.value === '') {
     alert('You have to fill the New Task field...')
   }else {
-    tasksArray.unshift(taskInput.value);
+    // Save task in local storege
+    storeTaskInLocalStorege(taskInput.value); 
   }
-  outputAllTasks(tasksArray)
+
   taskInput.value = '';
   e.preventDefault();
 }
 
+function storeTaskInLocalStorege(task) {
+  let tasks;
+  if(localStorage.getItem('tasks')=== null) {
+    tasks = [];
+  }else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+  }
+  tasks.unshift(task);
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+  outputAllTasks(tasks);
+}
+
+function checkStorage() {
+  let tasks = JSON.parse(localStorage.getItem('tasks'));
+  outputAllTasks(tasks)
+}
+
 function clearTasks () {
-  tasksArray = [];
-  outputAllTasks(tasksArray)
+  localStorage.clear();
+  checkStorage();
 }
 
 function getFiltredTasks() {
-  let filtredTasksArray = tasksArray.filter(task => {
+  let tasks = JSON.parse(localStorage.getItem('tasks'));
+  let filtredTasksArray = tasks.filter(task => {
     return task.indexOf(filter.value)!=-1;
   })
   outputAllTasks(filtredTasksArray)
 }
 
 function outputAllTasks(arr) {
-  if(!arr.length) {
+  if(arr === null || !arr.length) {
     taskList.innerText = 'No tasks'
   }else {
     taskList.innerHTML = '';
     arr.forEach(task => {
       let newLi = document.createElement('li');
       newLi.className = 'list-item';
-      newLi.innerHTML = `${task}<span class="del-btn">X</span>`;
+      newLi.innerHTML = `<p>${task}</p><span class="del-btn">X</span>`;
       taskList.appendChild(newLi)
     });
     setDeleteTaskBtn()
@@ -62,12 +80,10 @@ function setDeleteTaskBtn() {
 }
 
 function delThisTask(e) {
-  let currentTask = e.target.parentElement;
-  let taskString = currentTask.innerText;
-  taskString = [...taskString];
-  taskString.pop();
-  taskString = taskString.join('');
-  tasksArray.splice(tasksArray.indexOf(taskString), 1);
+  let tasks = JSON.parse(localStorage.getItem('tasks'));
+  let currentTask = e.target.previousElementSibling.innerText;
+  tasks.splice(tasks.indexOf(currentTask), 1)
+  localStorage.setItem('tasks', JSON.stringify(tasks));
   filter.value = '';
-  outputAllTasks(tasksArray)
+  checkStorage();
 }
