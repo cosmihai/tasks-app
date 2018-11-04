@@ -80,10 +80,13 @@ function setDeleteTaskBtn() {
 }
 
 function delThisTask(e) {
-  let tasks = JSON.parse(localStorage.getItem('tasks'));
-  let currentTask = e.target.previousElementSibling.innerText;
-  tasks.splice(tasks.indexOf(currentTask), 1)
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-  filter.value = '';
-  checkStorage();
+  if(confirm('This task will be deleted! Continue?')) {
+
+    let tasks = JSON.parse(localStorage.getItem('tasks'));
+    let currentTask = e.target.previousElementSibling.innerText;
+    tasks.splice(tasks.indexOf(currentTask), 1)
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    filter.value = '';
+    checkStorage();
+  }
 }
